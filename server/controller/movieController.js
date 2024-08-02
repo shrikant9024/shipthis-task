@@ -1,5 +1,28 @@
 const Movie = require('../models/movies')
 
+async function showMovies(req,res){
+    try{
+        const {query} = req;
+        const searchQuery = {};
+
+        if (query.title) {
+            searchQuery.title = new RegExp(query.title, 'i'); // Case-insensitive search
+        }
+        if (query.director) {
+            searchQuery.director = new RegExp(query.director, 'i'); // Case-insensitive search
+        }
+        if (query.country) {
+            searchQuery.country = new RegExp(query.country, 'i'); // Case-insensitive search
+        }
+
+        const movies = await Movie.find(searchQuery);
+        res.json(movies)
+
+    }catch(error){
+        res.status(500).json({message:error.message})
+    }
+}
+
 async function searchMovies(req,res){
     try{
         const {title} = req.body;
@@ -47,4 +70,4 @@ async function filterItems(req,res){
     }
 
 }
-module.exports ={ searchMovies,filterItems}
+module.exports ={ searchMovies,filterItems,showMovies}

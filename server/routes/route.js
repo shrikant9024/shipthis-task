@@ -1,6 +1,6 @@
 const express = require('express')
 const { handleSignup, handleLogin } = require('../controller/usercontroller')
-const { searchMovies, filterItems } = require('../controller/movieController')
+const { searchMovies, filterItems, showMovies } = require('../controller/movieController')
 
 const router = express.Router()
 
@@ -21,7 +21,7 @@ router.post('/login',handleLogin)
 
 
 
-
+router.get('/movies',showMovies)
 router.post('/search',searchMovies)
 router.get('/filter',filterItems)
 
