@@ -3,11 +3,13 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { NgFor, NgIf } from '@angular/common';
 import { MoviesService } from '../../service/movies.service';
 import { TruncatePipe } from '../../pipes/truncate.pipe';
+import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, NgIf, NgFor, TruncatePipe],
+  imports: [NavbarComponent, NgIf, NgFor, TruncatePipe,RouterLink],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -46,4 +48,19 @@ export class HomeComponent implements OnInit {
       error: (err) => this.errorMessage = 'Failed to load movies'
     });
   }
+
+  handleSearch(keyword:string):void{
+    this.movies = [];
+    this.moviesService.searchMovies(keyword).subscribe(data=>{
+      this.movies=data;
+      
+    },
+  error=>{
+    console.error('Error during search:',error);
+    this.errorMessage = 'Failed to fetch search results'
+    this.movies= []
+  }
+);
 }
+}
+

@@ -16,4 +16,13 @@ export class MoviesService {
     return this.http.get<any>(`${this.baseUrl}/filter?type=${encodeURIComponent(type)}`);
   }
 
+
+  getMovieById(id: string): Observable<any> { 
+    return this.http.get<any>(`${this.baseUrl}/movies/${id}`);
+  }
+
+  searchMovies(title:string):Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/search?title=${title}`)
+  }
+
 }
