@@ -3,42 +3,56 @@
     <ul class="flex space-x-10 justify-center mt-12">
       <li>
         <a
-          routerLink="/movies"
-          class="text-neutral-300 hover:text-neutral-400 transition ease-in-out px-3 cursor-pointer py-2 font-normal"
+          (click)="onNavClick('all', 'home')"
+          routerLink="/home"
+          routerLinkActive="home"
+          [ngClass]="{
+            'bg-red-700 px-6 text-white rounded-md': activeLink === 'home'
+          }"
+          class="text-neutral-300 hover:text-neutral-400 transition ease-in-out px-3 py-2 cursor-pointer font-normal rounded"
           >Home</a
         >
       </li>
       <li>
         <a
+          (click)="onNavClick('Movie', 'movies')"
           routerLink="/movies"
-          class="text-neutral-300 hover:text-neutral-400 transition ease-in-out px-3 cursor-pointer py-2 font-normal"
+          routerLinkActive="movies"
+          [ngClass]="{
+            'bg-red-600 px-6 text-white rounded-md': activeLink === 'movies'
+          }"
+          class="text-neutral-300 hover:text-neutral-400 transition ease-in-out px-3 py-2 cursor-pointer font-normal rounded"
           >Movies</a
         >
       </li>
       <li>
         <a
-          routerLink="/movies"
-          class="text-neutral-300 hover:text-neutral-400 transition ease-in-out px-3 cursor-pointer py-2 font-normal"
+          (click)="onNavClick('TV Show', 'tvshows')"
+          [ngClass]="{
+            'bg-red-600 px-6 text-white rounded-md': activeLink === 'tvshows'
+          }"
+          routerLink="/tvshows"
+          class="text-neutral-300 hover:text-neutral-400 transition ease-in-out px-3 cursor-pointer py-2 font-normal rounded-md"
           >TV Shows</a
         >
       </li>
       <li>
         <a
-          routerLink="/movies"
+          routerLink=""
           class="text-neutral-300 hover:text-neutral-400 transition ease-in-out px-3 cursor-pointer py-2 font-normal"
           >New & Popular</a
         >
       </li>
       <li>
         <a
-          routerLink="/movies"
+          routerLink="/"
           class="text-neutral-300 hover:text-neutral-400 transition ease-in-out px-3 cursor-pointer py-2 font-normal"
           >My List</a
         >
       </li>
       <li>
         <a
-          routerLink="/movies"
+          routerLink=""
           class="text-neutral-300 hover:text-neutral-400 transition ease-in-out px-3 cursor-pointer py-2 font-normal"
           >Brows by Languages</a
         >
