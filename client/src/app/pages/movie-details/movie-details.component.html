@@ -1,5 +1,7 @@
-<div class="w-full h-screen bg-neutral-900 flex flex-col p-8">
-  <app-navbar> </app-navbar>
+<div
+  class="w-full h-screen bg-neutral-900 flex flex-col p-4 sm:text-[12px] sm:p-8 lg:p-12"
+>
+  <app-navbar></app-navbar>
 
   <div *ngIf="errorMessage" class="text-red-500 mb-4 text-center">
     {{ errorMessage }}
@@ -7,25 +9,29 @@
 
   <div
     *ngIf="movie"
-    class="bg-neutral-800 p-8 rounded-lg shadow-lg text-white flex flex-col m-24 h-screen"
+    class="bg-neutral-800 p-4 mt-4 sm:p-6 md:p-8 lg:p-12 rounded-lg shadow-lg text-white flex flex-col mx-auto max-w-screen-lg h-auto 2xl:mt-14"
   >
-    <div class="text-center">
-      <h1 class="text-4xl font-bold mb-8">{{ movie.title }}</h1>
+    <div class="text-center mb-4">
+      <h1 class="text-2xl sm:text-3xl md:text-3xl font-bold mb-4">
+        {{ movie.title }}
+      </h1>
     </div>
-    <div class="mx-24 font-semibold">
-      <h2 class="text-xl mb-4">{{ movie.type }}</h2>
-      <h2 class="text-xl mb-4">ID: {{ movie.show_id }}</h2>
-      <h2 class="text-xl mb-4">
-        Director: <span>{{ movie.director }}</span>
+    <div class="font-semibold space-y-4">
+      <h2 class="text-lg sm:text-lg">{{ movie.type }}</h2>
+      <h2 class="text-lg sm:text-lg">ID: {{ movie.show_id }}</h2>
+      <h2 class="text-lg sm:text-lg">
+        Director: <span class="font-normal">{{ movie.director }}</span>
       </h2>
-      <h2 class="text-xl mb-4">Country: {{ movie.country }}</h2>
-      <h2 class="text-xl mb-4">Date Added: {{ movie.date_added }}</h2>
+      <h2 class="text-lg sm:text-xl">Country: {{ movie.country }}</h2>
+      <h2 class="text-lg sm:text-xl">Date Added: {{ movie.date_added }}</h2>
 
-      <p class="text-lg mb-4">Release year: {{ movie.release_year }}</p>
-      <p class="text-lg mb-4">Duration: {{ movie.duration }}</p>
-      <p class="text-lg mb-4">Rating: {{ movie.rating }}</p>
-      <p class="text-lg font-light mb-4">Listed In: {{ movie.listed_in }}</p>
-      <p class="text-base font-thin mb-4">{{ movie.description }}</p>
+      <p class="text-base sm:text-lg">Release Year: {{ movie.release_year }}</p>
+      <p class="text-base sm:text-lg">Duration: {{ movie.duration }}</p>
+      <p class="text-base sm:text-lg">Rating: {{ movie.rating }}</p>
+      <p class="text-base sm:text-lg font-light">
+        Listed In: {{ movie.listed_in }}
+      </p>
+      <p class="text-sm sm:text-base font-thin">{{ movie.description }}</p>
     </div>
   </div>
 </div>

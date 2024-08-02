@@ -1,38 +1,55 @@
 const Movie = require('../models/movies')
 
-async function showMovies(req,res){
-    try{
-        const {query} = req;
-        const searchQuery = {};
+async function showMovies(req, res) {
+    try {
+        // Assuming user information (including age) is attached to req.user
+        // const { age } = req.user;
+        const query = {};
 
-        if (query.title) {
-            searchQuery.title = new RegExp(query.title, 'i'); // Case-insensitive search
+        // Apply filters from query parameters if they exist
+        if (req.query.title) {
+            query.title = new RegExp(req.query.title, 'i'); 
         }
-        if (query.director) {
-            searchQuery.director = new RegExp(query.director, 'i'); // Case-insensitive search
+        if (req.query.director) {
+            query.director = new RegExp(req.query.director, 'i'); 
         }
-        if (query.country) {
-            searchQuery.country = new RegExp(query.country, 'i'); // Case-insensitive search
+        if (req.query.country) {
+            query.country = new RegExp(req.query.country, 'i'); 
         }
 
-        const movies = await Movie.find(searchQuery);
-        res.json(movies)
+        // Exclude R-rated movies for users under 18
+        // if (age < 18) {
+        //     query.rating = { $ne: 'R' };
+        // }
 
-    }catch(error){
-        res.status(500).json({message:error.message})
+      
+        const movies = await Movie.find(query);
+        res.json(movies);
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
 
 async function searchMovies(req,res){
     try{
-        const {title} = req.body;
+        const {title,cast} = req.query;
 
-        if(!title){
-            return res.status(400).json({message:'Title is required'});
+        if(!title && !cast){
+            return res.status(400).json({message:'Title or cast is required'});
         }
-        const movies = await Movie.find({title: title })
+        let query = {}
+        if (title) {
+            query.title = { $regex: title, $options: 'i' };
+        }
+
+        if (cast) {
+            query.cast = { $regex: cast, $options: 'i' }; 
+        }
+
+        const movies = await Movie.find(query)
         if(movies.length===0){
-            return res.status*(404).json({message:'No movies found'});
+            return res.status(404).json({message:'No movies found'});
     
         }
         return res.status(200).json(movies);
@@ -42,6 +59,26 @@ async function searchMovies(req,res){
     }
 
 
+}
+
+
+async function searchMovieById(req,res) {
+    try {
+        const movieId = req.params.id;
+
+        const movie = await Movie.findById(movieId);
+        if(!movie){
+            return res.status(404).json({message:"movie not found"})
+        }
+
+        res.json(movie)
+    } catch (error) {
+        console.error('error fetching movie',error)
+        res.status(500).json({message:'Server error'})
+
+        
+    }
+    
 }
 
 async function filterItems(req,res){
@@ -70,4 +107,4 @@ async function filterItems(req,res){
     }
 
 }
-module.exports ={ searchMovies,filterItems,showMovies}
+module.exports ={ searchMovies,filterItems,showMovies,searchMovieById}
