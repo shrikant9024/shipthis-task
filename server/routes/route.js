@@ -1,6 +1,7 @@
 const express = require('express')
 const { handleSignup, handleLogin } = require('../controller/usercontroller')
 const { searchMovies, filterItems, showMovies, searchMovieById } = require('../controller/movieController')
+const { validateToken } = require('../service/jwt')
 
 const router = express.Router()
 
@@ -10,9 +11,9 @@ router.get('/',(req,res)=>{
 
 })
 
+//user routes
 
-
-router.get('/login',(req,res)=>{
+router.get('/login',validateToken,(req,res)=>{
 
 })
 
@@ -20,6 +21,7 @@ router.post('/signup',handleSignup)
 router.post('/login',handleLogin)
 
 
+//movie routes
 
 router.get('/movies', showMovies)
 router.get('/search',searchMovies)
